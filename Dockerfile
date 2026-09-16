@@ -1,9 +1,9 @@
-FROM registry.ci.openshift.org/ocp/builder:rhel-9-golang-1.24-openshift-4.20 AS builder
+FROM quay-proxy.ci.openshift.org/openshift/ci:ocp_builder_rhel-9-golang-1.24-openshift-4.20 AS builder
 WORKDIR /build
 COPY . .
 RUN make build
 
-FROM registry.ci.openshift.org/ocp/4.20:base-rhel9
+FROM quay-proxy.ci.openshift.org/openshift/ci:ocp_4.20_base-rhel9
 
 COPY --from=builder /build/bin/cluster-olm-operator /
 COPY manifests /manifests
